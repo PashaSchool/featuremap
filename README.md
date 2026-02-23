@@ -1,21 +1,21 @@
-# featuremap
+# faultline
 
-[![PyPI version](https://img.shields.io/pypi/v/featuremap?color=blue)](https://pypi.org/project/featuremap/)
-[![Python](https://img.shields.io/pypi/pyversions/featuremap)](https://pypi.org/project/featuremap/)
-[![License](https://img.shields.io/github/license/pashaSchool/featuremap)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/pashaSchool/featuremap?style=social)](https://github.com/pashaSchool/featuremap)
+[![PyPI version](https://img.shields.io/pypi/v/faultline?color=blue)](https://pypi.org/project/faultline/)
+[![Python](https://img.shields.io/pypi/pyversions/faultline)](https://pypi.org/project/faultline/)
+[![License](https://img.shields.io/github/license/pashaSchool/faultline)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/pashaSchool/faultline?style=social)](https://github.com/pashaSchool/faultline)
 
 > Turn your git history into a feature risk map — no Jira required.
 
-**featuremap** analyzes your git commit history to automatically detect features and modules in your codebase, then shows which ones are accumulating the most bug fixes — your technical debt hotspots.
+**faultline** analyzes your git commit history to automatically detect features and modules in your codebase, then shows which ones are accumulating the most bug fixes — your technical debt hotspots.
 
 No integrations. No configuration. Just point it at any git repo.
 
 ---
 
-## Why featuremap?
+## Why faultline?
 
-Engineering managers need to know *where* the technical debt is before they can act on it. Most tools require you to tag tickets in Jira or Linear. featuremap reads the truth directly from your git history.
+Engineering managers need to know *where* the technical debt is before they can act on it. Most tools require you to tag tickets in Jira or Linear. faultline reads the truth directly from your git history.
 
 ```
 ✗ payments    — health: 23   38 bug fixes / 112 commits (33.9%)
@@ -30,20 +30,20 @@ Engineering managers need to know *where* the technical debt is before they can 
 ### Homebrew (macOS / Linux) — coming soon
 
 ```bash
-brew install pashaSchool/tap/featuremap
+brew install pashaSchool/tap/faultline
 ```
 
 ### pip
 
 ```bash
-pip install featuremap
+pip install faultline
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/pashaSchool/featuremap
-cd featuremap
+git clone https://github.com/pashaSchool/faultline
+cd faultline
 pip install -e .
 ```
 
@@ -53,29 +53,29 @@ pip install -e .
 
 ```bash
 # Analyze the current directory
-featuremap analyze .
+faultline analyze .
 
 # Analyze a specific repo
-featuremap analyze ./path/to/repo
+faultline analyze ./path/to/repo
 
 # Focus on a source subdirectory (recommended for frontend/monorepo projects)
-featuremap analyze . --src src/
+faultline analyze . --src src/
 
 # Last 90 days, show top 5 risk zones
-featuremap analyze . --days 90 --top 5
+faultline analyze . --days 90 --top 5
 
 # Save report to a custom path
-featuremap analyze . --output ./reports/feature-map.json
+faultline analyze . --output ./reports/feature-map.json
 
 # Just print, don't save
-featuremap analyze . --no-save
+faultline analyze . --no-save
 ```
 
 ---
 
 ## AI-Powered Feature Detection
 
-By default featuremap groups files by directory structure (fast, no API needed). With `--llm` enabled, Claude or a local Ollama model reads the full file tree and returns a **semantic feature map** — grouping files by business domain, not folder names.
+By default faultline groups files by directory structure (fast, no API needed). With `--llm` enabled, Claude or a local Ollama model reads the full file tree and returns a **semantic feature map** — grouping files by business domain, not folder names.
 
 ```
 Without --llm:  "components", "views", "hooks"   ← technical layers
@@ -86,14 +86,14 @@ With --llm:     "user-auth", "payments", "dashboard"  ← business features
 
 ```bash
 # Pass your API key directly
-featuremap analyze . --llm --api-key sk-ant-...
+faultline analyze . --llm --api-key sk-ant-...
 
 # Or use an environment variable
 export ANTHROPIC_API_KEY=sk-ant-...
-featuremap analyze . --llm
+faultline analyze . --llm
 
 # With source folder filter
-featuremap analyze . --llm --src src/
+faultline analyze . --llm --src src/
 ```
 
 Get your API key at [console.anthropic.com](https://console.anthropic.com) → API Keys.
@@ -116,17 +116,17 @@ ollama pull qwen2.5-coder:7b
 ollama serve
 
 # 4. Install the ollama package
-pip install 'featuremap[ollama]'
+pip install 'faultline[ollama]'
 
 # 5. Run
-featuremap analyze . --llm --provider ollama --src src/
+faultline analyze . --llm --provider ollama --src src/
 ```
 
 Use a lighter model if RAM is limited:
 
 ```bash
 ollama pull llama3.2:3b
-featuremap analyze . --llm --provider ollama --model llama3.2:3b
+faultline analyze . --llm --provider ollama --model llama3.2:3b
 ```
 
 The API key is validated **before** the analysis starts — no waiting to discover a bad key.
@@ -140,13 +140,13 @@ Use `--src` to restrict analysis to a specific folder. Everything outside that p
 
 ```bash
 # Frontend app with sources in src/
-featuremap analyze . --src src/
+faultline analyze . --src src/
 
 # Next.js app
-featuremap analyze . --src app/
+faultline analyze . --src app/
 
 # Monorepo — analyze one package
-featuremap analyze . --src packages/api/src/
+faultline analyze . --src packages/api/src/
 ```
 
 What `--src` automatically excludes regardless of location:
@@ -187,7 +187,7 @@ Top 3 risk zones:
 
 ### JSON
 
-Results are saved to `.featuremap/feature-map.json` by default:
+Results are saved to `.faultline/feature-map.json` by default:
 
 ```json
 {
@@ -214,7 +214,7 @@ Results are saved to `.featuremap/feature-map.json` by default:
 
 ## CLI Reference
 
-### `featuremap analyze [REPO_PATH]`
+### `faultline analyze [REPO_PATH]`
 
 | Flag | Default | Description |
 |------|---------|-------------|
@@ -222,7 +222,7 @@ Results are saved to `.featuremap/feature-map.json` by default:
 | `--days` | `365` | Days of git history to analyze |
 | `--max-commits` | `5000` | Maximum commits to read |
 | `--top` | `3` | Number of top risk zones to highlight |
-| `--output` | `.featuremap/feature-map.json` | Output file path |
+| `--output` | `.faultline/feature-map.json` | Output file path |
 | `--no-save` | — | Skip saving JSON output |
 | `--llm` | `false` | Use AI for semantic feature detection |
 | `--provider` | `anthropic` | LLM provider: `anthropic` or `ollama` |
