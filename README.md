@@ -59,7 +59,7 @@ faultline analyze . --no-save
 # AI-powered semantic feature detection
 faultline analyze . --llm --src src/
 
-# AI feature detection + user-facing flow breakdown within each feature
+# AI feature detection with flow breakdown
 faultline analyze . --llm --flows --src src/
 ```
 
@@ -84,7 +84,7 @@ faultline analyze . --llm --api-key sk-ant-...
 export ANTHROPIC_API_KEY=sk-ant-...
 faultline analyze . --llm
 
-# Recommended for large frontend projects
+# Recommended for large projects — focus on source files only
 faultline analyze . --llm --src src/
 ```
 
@@ -167,10 +167,10 @@ Output shows two tables: features overview, then features with nested flows:
 Use `--src` to restrict analysis to a specific folder. Everything outside that path is ignored.
 
 ```bash
-# Frontend app with sources in src/
+# Sources in src/
 faultline analyze . --src src/
 
-# Next.js app
+# Sources in app/
 faultline analyze . --src app/
 
 # Monorepo — analyze one package
@@ -267,7 +267,7 @@ Results are saved to `.faultline/feature-map.json` by default:
    - **LLM** (`--llm`): sends the file tree to Claude or Ollama, gets back a semantic `{feature: [files]}` mapping by business domain
 4. **Scans commit history** — for each feature, counts total commits and bug fix commits
 5. **Calculates health scores** — `100 - (bug_fix_ratio × 200)`, weighted by commit activity
-6. **Detects flows** (`--flows`): extracts TS/JS exports and routes, sends per-feature file signatures to LLM, maps to named user journeys
+6. **Detects flows** (`--flows`): analyzes files within each feature and maps them to named user-facing journeys
 
 ---
 
